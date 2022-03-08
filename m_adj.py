@@ -69,6 +69,7 @@ class Graph:
 
         timer = 1
         resp = []
+        pos_resp=0
         painted_count = 0
         new_cell(start)
         while painted_count < len(self.vertices):
@@ -86,14 +87,16 @@ class Graph:
                         if not self.vertices[pos_connection].painted():
                             stack[0][1] = pos_connection+1
                             new_cell(pos_connection)
+                            pos_resp+=1
                             break
 
                     pos_connection+=1
 
                 # if not have more connections
                 if pos_connection >= len(connections):
-                    resp[len(stack)-1].append(timer)
+                    resp[pos_resp].append(timer)
                     del_cell()
+                    pos_resp-=1
 
                 timer+=1
             else:
@@ -105,6 +108,7 @@ class Graph:
                     pos_v+= 1
 
         return resp
+
 
     def __str__(self):
         output  = '(\nis ' + '' if self.directional else 'not '
