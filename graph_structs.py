@@ -11,11 +11,15 @@ class Vertice:
     def __str__(self) -> str:
         return f"('{self.label}', {self.data})"
 
-    def altern_paint(self):
+    def altern_color(self):
         self._painted = 1-self._painted
+
+    def reset_color(self):
+        self._painted = 0
 
     def painted(self):
         return self._painted
+
 
 class Edge:
     def __init__(self, label:str="No label", weight:float=1.0):

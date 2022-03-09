@@ -76,11 +76,10 @@ class Graph:
             if len(stack) > 0:
                 connections = self.matrix[current_v()]
                 if not self.vertices[current_v()].painted(): 
-                    self.vertices[current_v()].altern_paint()
+                    self.vertices[current_v()].altern_color()
                     resp.append([timer])
                     painted_count+=1
 
-                print(stack)
                 pos_connection=final_connec()
                 for connection in connections[final_connec():]:
                     if connection.exist():
@@ -99,6 +98,7 @@ class Graph:
                     pos_resp-=1
 
                 timer+=1
+
             else:
                 pos_v = 0
                 for v in self.vertices:
@@ -107,8 +107,57 @@ class Graph:
 
                     pos_v+= 1
 
+        for v in self.vertices: 
+            v.reset_color()
+
         return resp
 
+    # def breadth(self, start:int=0):
+    #     #================= queue definitions
+    #     queue = []
+    #     new_cell      = lambda v, l: queue.append((v, l))
+    #     del_cell      = lambda: queue.pop(0)
+    #     level         = lambda v: queue[v][1]
+    #     back          = lambda: queue[0][0]
+    #     front         = lambda: queue[-1][0]
+    #     #=================
+
+    #     VERTICE =  0
+    #     LAST    = -1
+    #     LEVEL   =  1
+
+    #     resp = [[[], -1]]
+    #     #start insertion
+    #     new_cell(start, 0)
+    #     self.vertices[start].altern_color()
+    #     resp[0][0].append(start)
+    #     resp[0][1] = 0
+
+    #     resp.append([[], -1])                                                            
+
+    #     current_level = 1
+    #     painted_count = 1
+    #     while painted_count < len(self.vertices):
+    #         connections = self.matrix[back()]
+    #         painted_count += 1
+            
+    #         pos_connec=0
+    #         for connection in connections:
+    #             if connection.exist():
+    #                 if not self.vertices[pos_connec].painted():
+    #                     self.vertices[pos_connec].altern_color()
+    #                     new_cell(pos_connec, current_level+1)
+    #                     resp[LAST][VERTICE].append(pos_connec)
+    #                     painted_count+=1
+
+    #             pos_connec+=1
+
+    #         del_cell()
+    #         if level(front()) != current_level:
+    #             resp[LAST] = level(back())
+    #             resp.append([[], -1])
+
+    #     return resp
 
     def __str__(self):
         output  = '(\nis ' + '' if self.directional else 'not '
@@ -133,12 +182,13 @@ g.add(
     Vertice(data=5),
     Vertice(data=2),
     Vertice(data=1),
-    EdgeEntry(1, 1, Edge(weight=5)),
-    EdgeEntry(1, 2, Edge(label='teste')),
-    EdgeEntry(0, 1, Edge(weight=2.5)),
+    EdgeEntry(0, 1, Edge(weight=5)),
+    EdgeEntry(0, 2, Edge(weight=2.5)),
+    EdgeEntry(1, 1, Edge(label='teste')),
+    EdgeEntry(1, 2, Edge(weight=6)),
     EdgeEntry(3, 1, Edge(weight=6)),
-    EdgeEntry(0, 2, Edge(weight=1.5))
 )
 
 print(g)
-print(g.timer(3))
+print(g.timer(0))
+print(g.breadth(0))
